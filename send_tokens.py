@@ -30,6 +30,11 @@ pk = mnemonic.to_public_key(mnemonic_secret)
 print("Private key:", sk)
 print("Address:", pk)
 
+#Check balance
+#account_info = acl.account_info(pk)
+#print("Account balance: {} microAlgos".format(account_info.get('amount')) + "\n")
+
+
 def send_tokens( receiver_pk, tx_amount ):
     params = acl.suggested_params()
     gen_hash = params.gh
@@ -39,7 +44,6 @@ def send_tokens( receiver_pk, tx_amount ):
 
     #Your code here
 
-    note = "Algorand Moon".encode()
     unsigned_tx = transaction.PaymentTxn(pk, tx_fee, first_valid_round, last_valid_round, gen_hash, receiver_pk, tx_amount, flat_fee=True)
     signed_tx = unsigned_tx.sign(sk)
 
