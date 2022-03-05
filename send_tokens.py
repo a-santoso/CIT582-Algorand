@@ -38,6 +38,8 @@ def send_tokens( receiver_pk, tx_amount ):
     last_valid_round = params.last
 
     #Your code here
+    tx_amount = 88
+
     note = "Algorand Moon".encode()
     unsigned_tx = transaction.PaymentTxn(pk, params,receiver_pk, tx_amount, None, note)
     signed_tx = unsigned_tx.sign(sk)
