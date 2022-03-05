@@ -2,6 +2,7 @@
 
 from algosdk.v2client import algod
 from algosdk import mnemonic
+from algosdk import account, encoding
 from algosdk import transaction
 
 #Connect to Algorand node maintained by PureStake
@@ -15,6 +16,20 @@ headers = {
 acl = algod.AlgodClient(algod_token, algod_address, headers)
 min_balance = 100000 #https://developer.algorand.org/docs/features/accounts/#minimum-balance
 
+# ACCOUNT CREATION
+
+# generate an account
+#sk, pk = account.generate_account()
+#print("Private key:", sk)
+#print("Address:", pk)
+
+mnemonic_secret = "pretty frequent slogan collect lyrics culture nest focus crystal remain ketchup voice garage village build wear noble luxury lens acoustic host december focus above primary"
+sk = mnemonic.to_private_key(mnemonic_secret)
+pk = mnemonic.to_public_key(mnemonic_secret)
+
+print("Private key:", sk)
+print("Address:", pk)
+
 def send_tokens( receiver_pk, tx_amount ):
     params = acl.suggested_params()
     gen_hash = params.gh
@@ -23,6 +38,18 @@ def send_tokens( receiver_pk, tx_amount ):
     last_valid_round = params.last
 
     #Your code here
+    note = "Algorand Moon".encode()
+    unsigned_tx = transaction.PaymentTxn(pk, params,receiver_pk, tx_amount, None, note)
+    signed_tx = unsigned_tx.sign(sk)
+
+    txid = acl.send_transaction(signed_tx)
+    print("Succesful sent trx with ID: {}".format(txid))
+
+    wait_for_confirmation(acl, txid)
+
+
+    sender_pk = pk
+
 
     return sender_pk, txid
 
