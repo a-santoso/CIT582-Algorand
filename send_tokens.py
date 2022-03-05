@@ -38,7 +38,7 @@ def send_tokens( receiver_pk, tx_amount ):
     last_valid_round = params.last
 
     #Your code here
-    tx_amount = 88
+    tx_amount = 1000000
 
     note = "Algorand Moon".encode()
     unsigned_tx = transaction.PaymentTxn(pk, params,receiver_pk, tx_amount, None, note)
@@ -48,7 +48,6 @@ def send_tokens( receiver_pk, tx_amount ):
     print("Succesful sent trx with ID: {}".format(txid))
 
     wait_for_confirmation(acl, txid)
-
 
     sender_pk = pk
 
