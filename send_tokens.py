@@ -38,10 +38,9 @@ def send_tokens( receiver_pk, tx_amount ):
     last_valid_round = params.last
 
     #Your code here
-    tx_amount = 1000000
 
     note = "Algorand Moon".encode()
-    unsigned_tx = transaction.PaymentTxn(pk, params,receiver_pk, tx_amount, None, note)
+    unsigned_tx = transaction.PaymentTxn(pk, tx_fee, first_valid_round, last_valid_round, gen_hash, receiver_pk, tx_amount, flat_fee=True)
     signed_tx = unsigned_tx.sign(sk)
 
     txid = acl.send_transaction(signed_tx)
